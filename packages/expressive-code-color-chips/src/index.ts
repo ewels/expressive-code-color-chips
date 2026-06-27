@@ -72,11 +72,11 @@ export interface PluginColorChipsOptions {
 	 * Additional language tags to annotate colors in, beyond the built-in CSS
 	 * dialects (`css`, `scss`, `sass`, `less`, and `stylus`).
 	 *
-	 * Use this to enable color chips for custom or non-CSS languages that
-	 * include color values, for example:
+	 * Use this to enable color chips for other languages that include color
+	 * values, for example:
 	 *
 	 * ```js
-	 * pluginColorChips({ languages: ['metro'] })
+	 * pluginColorChips({ languages: ['json'] })
 	 * ```
 	 *
 	 * @default []
