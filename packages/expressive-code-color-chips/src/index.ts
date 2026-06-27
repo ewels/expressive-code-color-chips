@@ -11,8 +11,8 @@ import { colors } from './colorRegEx';
 
 const chipClass = 'ec-css-color-chip';
 const localColorVariable = '--ec-css-color-chip';
-/** Language tags where CSS color annotations should apply. */
-const cssDialects = new Set(['css', 'scss', 'sass', 'less', 'stylus']);
+/** Language tags where CSS color annotations apply by default. */
+const cssDialects = ['css', 'scss', 'sass', 'less', 'stylus'];
 
 /** Adds an annotation to a CSS color, which will display that color as a chip next to it. */
 class CssColorAnnotation extends ExpressiveCodeAnnotation {
@@ -66,15 +66,34 @@ function annotateLine(line: ExpressiveCodeLine) {
 		});
 }
 
+/** Configuration options for the Color Chips plugin. */
+export interface PluginColorChipsOptions {
+	/**
+	 * Additional language tags to annotate colors in, beyond the built-in CSS
+	 * dialects (`css`, `scss`, `sass`, `less`, and `stylus`).
+	 *
+	 * Use this to enable color chips for custom or non-CSS languages that
+	 * include color values, for example:
+	 *
+	 * ```js
+	 * pluginColorChips({ languages: ['metro'] })
+	 * ```
+	 *
+	 * @default []
+	 */
+	languages?: string[];
+}
+
 /**
  * Expressive Code plugin that adds a small preview of each CSS color in your code examples.
  */
-export function pluginColorChips() {
+export function pluginColorChips({ languages = [] }: PluginColorChipsOptions = {}) {
+	const enabledLanguages = new Set([...cssDialects, ...languages]);
 	return definePlugin({
 		name: 'ColorChips',
 		hooks: {
 			postprocessAnalyzedCode({ codeBlock }) {
-				if (cssDialects.has(codeBlock.language)) {
+				if (enabledLanguages.has(codeBlock.language)) {
 					codeBlock.getLines().forEach((line) => annotateLine(line));
 				}
 			},
