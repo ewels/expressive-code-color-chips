@@ -7,15 +7,15 @@ After adding the Color Chips plugin to your Expressive Code config as shown in [
 
 ## Additional languages
 
-By default, the plugin annotates colors in `css`, `scss`, `sass`, `less`, and `stylus` code blocks. If you use another language that includes color values, pass its language tag to the `languages` option to enable color chips for it too.
+By default, the plugin annotates colors in `css`, `scss`, `sass`, `less`, and `stylus` code blocks. Use the `languages` option to control which languages get color chips, for example to enable them for another language that includes color values.
 
 ```js
 {
-	plugins: [pluginColorChips({ languages: ['json'] })],
+	plugins: [pluginColorChips({ languages: ['css', 'json'] })],
 },
 ```
 
-The languages you provide are added to the built-in CSS dialects, so CSS code blocks continue to display color chips as well.
+The value you provide replaces the defaults, so include any of the built-in CSS dialects you still want to annotate.
 
 ## Styling
 

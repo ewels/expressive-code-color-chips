@@ -69,17 +69,18 @@ function annotateLine(line: ExpressiveCodeLine) {
 /** Configuration options for the Color Chips plugin. */
 export interface PluginColorChipsOptions {
 	/**
-	 * Additional language tags to annotate colors in, beyond the built-in CSS
-	 * dialects (`css`, `scss`, `sass`, `less`, and `stylus`).
+	 * The language tags to annotate colors in.
 	 *
-	 * Use this to enable color chips for other languages that include color
-	 * values, for example:
+	 * Set this to override the built-in CSS dialects (`css`, `scss`, `sass`,
+	 * `less`, and `stylus`) and enable color chips for other languages that
+	 * include color values. The value you provide replaces the defaults, so
+	 * include any built-in dialects you still want to annotate.
 	 *
 	 * ```js
-	 * pluginColorChips({ languages: ['json'] })
+	 * pluginColorChips({ languages: ['css', 'json'] })
 	 * ```
 	 *
-	 * @default []
+	 * @default ['css', 'scss', 'sass', 'less', 'stylus']
 	 */
 	languages?: string[];
 }
@@ -87,8 +88,8 @@ export interface PluginColorChipsOptions {
 /**
  * Expressive Code plugin that adds a small preview of each CSS color in your code examples.
  */
-export function pluginColorChips({ languages = [] }: PluginColorChipsOptions = {}) {
-	const enabledLanguages = new Set([...cssDialects, ...languages]);
+export function pluginColorChips({ languages = cssDialects }: PluginColorChipsOptions = {}) {
+	const enabledLanguages = new Set(languages);
 	return definePlugin({
 		name: 'ColorChips',
 		hooks: {
